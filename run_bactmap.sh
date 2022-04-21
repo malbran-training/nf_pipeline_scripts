@@ -23,7 +23,8 @@ nextflow run ${NEXTFLOW_PIPELINE_DIR}/workflow/main.nf \
 --reference ${REF} \
 --iqtree \
 -w ${DATA_DIR}/bactmap-1.0.0/work \
--with-tower -qs 1000 -resume
+-profile singularity
+-with-tower -qs 32 -resume
 #-c ${NEXTFLOW_PIPELINE_DIR}/user.config \
 
 # Clean up on sucess/exit 0
