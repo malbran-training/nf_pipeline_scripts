@@ -16,6 +16,8 @@ function help
    echo "Input:"
    echo "fastq_directory     A directory containing the input fastq files"
    echo
+   echo "To run this pipeline with alternative parameters, copy this script and make changes to nextflow run as required"
+   echo
 }
 
 # Check number of input parameters 
