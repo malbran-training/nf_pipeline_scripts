@@ -10,11 +10,11 @@ function help
 {
    # Display Help
    echo "Runs the nanoseq nextflow pipeline."
-   echo "Details of the pipeline found at https://nf-co.re/nanoseq"
+   echo "Details of the pipeline found at https://nf-co.re/nanoseq/2.0.1"
    echo
    echo "Usage: run_nanoseq.sh file_of_accessions output_directory"
    echo "Input:"
-   echo "input_file 	      File of information about samples to be processed, see https://nf-co.re/nanoseq/usage for details"
+   echo "input_file 	      File of information about samples to be processed, see https://nf-co.re/nanoseq/2.0.1/usage for details"
    echo "output_directory     Where to store the results of the pipeline"
    echo
    echo "To run this pipeline with alternative parameters, copy this script and make changes to nextflow run as required"
