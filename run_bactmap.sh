@@ -14,8 +14,10 @@ function help
    echo
    echo "Usage: run_bactmap.sh fastq_directory reference"
    echo "Input:"
-   echo "fastq_directory     A directory containing the input fastq files and a file samplesheet.csv listing the fastq files"
+   echo "fastq_directory     A directory containing the input fastq files and a file samplesheet.csv, see https://nf-co.re/bactmap/1.0.0/usage"
    echo "reference           A reference fasta file"
+   echo
+   echo "To run this pipeline with alternative parameters, copy this script and make changes to nextflow run as required"
    echo
 }
 
