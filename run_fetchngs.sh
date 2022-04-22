@@ -10,11 +10,11 @@ function help
 {
    # Display Help
    echo "Runs the fetchngs nextflow pipeline."
-   echo "Details of the pipeline found at https://nf-co.re/fetchngs"
+   echo "Details of the pipeline found at https://nf-co.re/fetchngs/1.5"
    echo
    echo "Usage: run_fetchngs.sh file_of_accessions output_directory"
    echo "Input:"
-   echo "file_of_accesions    List of accessions to download, see https://nf-co.re/fetchngs/usage"
+   echo "file_of_accesions    List of accessions to download, see https://nf-co.re/fetchngs/1.5/usage"
    echo "output_directory     Location to store the downloaded data"
    echo
    echo "To run this pipeline with alternative parameters, copy this script and make changes to nextflow run as required"
