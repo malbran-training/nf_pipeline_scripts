@@ -10,6 +10,7 @@ function help
 {
    # Display Help
    echo "Runs the bactmap nextflow pipeline."
+   echo "Details of the pipeline found at https://nf-co.re/bactmap"
    echo
    echo "Usage: run_bactmap.sh fastq_directory reference"
    echo "Input:"
