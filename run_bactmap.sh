@@ -6,9 +6,50 @@ export NXF_ANSI_LOG=false
 #export NXF_OPTS="-Xms8G -Xmx8G -Dnxf.pool.maxThreads=2000"
 export NXF_VER=21.10.6
 
-# Check number of input parameters and that files/directories exist
+function help
+{
+   # Display Help
+   echo "Runs the bactmap nextflow pipeline."
+   echo
+   echo "Usage: run_bactmap.sh fastq_directory reference"
+   echo "Input:"
+   echo "fastq_directory     A directory containing the input fastq files and a file samplesheet.csv listing the fastq files"
+   echo "reference           A reference fasta file"
+   echo
+}
+
+# Check number of input parameters 
+
+NAG=$#
+
+if [ $NAG -ne 2 ]
+then
+  help
+  echo "Please provide the correct number of input arguments"
+  echo
+  exit;
+fi
+
+# Check the input directory and reference genome exists
+
 DATA_DIR=$1
 REF=$2
+
+if [ ! -d $DATA_DIR ]
+then
+  help
+  echo "The directory $DATA_DIR does not exist"
+  echo
+  exit;
+fi
+
+if [ ! -f $REF ]
+then
+  help
+  echo "The reference file $REF does not exist"
+  echo
+  exit;
+fi
 
 RAND=$(date +%s%N | cut -b10-19)
 OUT_DIR=${DATA_DIR}/bactmap-1.0.0_${RAND}
@@ -26,7 +67,7 @@ nextflow run ${NEXTFLOW_PIPELINE_DIR}/workflow/main.nf \
 -w ${OUT_DIR}/work \
 -profile singularity \
 -with-tower -resume \
--c /home/software/nf_pipeline_scripts/bakersrv1.config
+-c /home/vagrant/nf_pipeline_scripts/bakersrv1.config
 
 # Clean up on sucess/exit 0
 status=$?
