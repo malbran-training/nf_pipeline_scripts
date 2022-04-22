@@ -10,6 +10,7 @@ function help
 {
    # Display Help
    echo "Runs the ghru assembly nextflow pipeline."
+   echo "Details of the pipeline found at https://gitlab.com/cgps/ghru/pipelines/dsl2/pipelines/assembly"
    echo
    echo "Usage: run_ghru_asembly.sh fastq_directory"
    echo "Input:"
