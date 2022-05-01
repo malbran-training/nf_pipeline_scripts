@@ -64,9 +64,8 @@ ${NEXTFLOW_PIPELINE_DIR}/main.nf \
 --confindr_db_path /data/dbs/confindr/ \
 --careful \
 -w ${WORK_DIR} \
--profile singularity \
 -with-tower -resume \
-#-c /home/vagrant/nf_pipeline_scripts/bakersrv1.config
+-c /home/jk843/nf_pipeline_scripts/conf/bakersrv1.config,/home/jk843/nf_pipeline_scripts/conf/pipelines/ghru_assembly.config
 
 # Clean up on sucess/exit 0
 status=$?
