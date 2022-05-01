@@ -11,7 +11,7 @@ function help
    echo 
    echo "usage: "$script" [-h] -i input_directory"
    echo
-   echo "Runs the ghru assembly nextflow pipeline, see https://gitlab.com/cgps/ghru/pipelines/dsl2/pipelines/assembly"
+   echo "Runs the ghru roary nextflow pipeline, see https://gitlab.com/cgps/ghru/pipelines/roary"
    echo
    echo "optional arguments:"
    echo "  -h, --help           show this help message and exit"
@@ -48,27 +48,24 @@ then
 fi
 
 RAND=$(date +%s%N | cut -b10-19)
-OUT_DIR=${INPUT_DIR}/ghru-assembly-2.1.2_${RAND}
+OUT_DIR=${INPUT_DIR}/ghru-roary-1.1.4_${RAND}
 WORK_DIR=${OUT_DIR}/work
-NEXTFLOW_PIPELINE_DIR='/home/software/nf-pipelines/assembly-2.1.2'
+NEXTFLOW_PIPELINE_DIR='/home/software/nf-pipelines/roary-1.1.4'
 
 echo "Pipeline is: "$NEXTFLOW_PIPELINE_DIR
 echo "Input data is: "$INPUT_DIR
 echo "Output will be written to: "$OUT_DIR
 
 nextflow run \
-${NEXTFLOW_PIPELINE_DIR}/main.nf \
---adapter_file ${NEXTFLOW_PIPELINE_DIR}/adapters.fas \
---qc_conditions ${NEXTFLOW_PIPELINE_DIR}/qc_conditions_nextera_relaxed.yml \
+${NEXFLOW_WORKFLOWS_DIR}/roary/roary.nf \
 --input_dir ${INPUT_DIR} \
---fastq_pattern '*{R,_}{1,2}.f*q.gz' \
+--fasta_pattern '*.fasta' \
 --output_dir ${OUT_DIR} \
---depth_cutoff 100 \
---confindr_db_path /data/dbs/confindr/ \
---careful \
+--max_clusters 100000 \
+--tree \
 -w ${WORK_DIR} \
 -with-tower -resume \
--c /home/software/nf_pipeline_scripts/conf/bakersrv1.config,/home/software/nf_pipeline_scripts/conf/pipelines/ghru_assembly.config
+-c /home/software/nf_pipeline_scripts/conf/bakersrv1.config,/home/software/nf_pipeline_scripts/conf/pipelines/ghru_roary.config
 
 # Clean up on sucess/exit 0
 status=$?
