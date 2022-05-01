@@ -56,7 +56,7 @@ fi
 
 RAND=$(date +%s%N | cut -b10-19)
 WORK_DIR=${OUT_DIR}/work_fetchngs-1.5_${RAND}
-NEXTFLOW_PIPELINE_DIR='/home/jk843/nf-pipelines/nf-core-fetchngs-1.5'
+NEXTFLOW_PIPELINE_DIR='/home/software/nf-pipelines/nf-core-fetchngs-1.5'
 
 echo "Pipeline is: "$NEXTFLOW_PIPELINE_DIR
 echo "Input file is: "$INPUT
@@ -69,7 +69,7 @@ nextflow run ${NEXTFLOW_PIPELINE_DIR}/workflow/main.nf \
 -w ${WORK_DIR} \
 -profile singularity \
 -with-tower -resume \
--c /home/jk843/nf_pipeline_scripts/conf/bakersrv1.config
+-c /home/software/nf_pipeline_scripts/conf/bakersrv1.config
 
 # Clean up on sucess/exit 0
 status=$?

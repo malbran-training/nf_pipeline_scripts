@@ -47,7 +47,7 @@ fi
 RAND=$(date +%s%N | cut -b10-19)
 OUT_DIR=${DATA_DIR}/ghru-assembly-2.1.2_${RAND}
 WORK_DIR=${OUT_DIR}/work
-NEXTFLOW_PIPELINE_DIR='/home/jk843/nf-pipelines/assembly-2.1.2'
+NEXTFLOW_PIPELINE_DIR='/home/software/nf-pipelines/assembly-2.1.2'
 
 echo "Pipeline is: "$NEXTFLOW_PIPELINE_DIR
 echo "Input data is: "$DATA_DIR
@@ -65,7 +65,7 @@ ${NEXTFLOW_PIPELINE_DIR}/main.nf \
 --careful \
 -w ${WORK_DIR} \
 -with-tower -resume \
--c /home/jk843/nf_pipeline_scripts/conf/bakersrv1.config,/home/jk843/nf_pipeline_scripts/conf/pipelines/ghru_assembly.config
+-c /home/software/nf_pipeline_scripts/conf/bakersrv1.config,/home/software/nf_pipeline_scripts/conf/pipelines/ghru_assembly.config
 
 # Clean up on sucess/exit 0
 status=$?

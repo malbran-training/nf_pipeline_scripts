@@ -64,7 +64,7 @@ fi
 RAND=$(date +%s%N | cut -b10-19)
 OUT_DIR=${INPUT_DIR}/nanoseq-2.0.1_${RAND}
 WORK_DIR=${OUT_DIR}/work
-NEXTFLOW_PIPELINE_DIR='/home/jk843/nf-pipelines/nf-core-nanoseq-2.0.1'
+NEXTFLOW_PIPELINE_DIR='/home/software/nf-pipelines/nf-core-nanoseq-2.0.1'
 
 echo "Pipeline is: "$NEXTFLOW_PIPELINE_DIR
 echo "Input file is: "$INPUT
@@ -81,7 +81,7 @@ nextflow run ${NEXTFLOW_PIPELINE_DIR}/workflow/main.nf \
 -w ${WORK_DIR} \
 -profile singularity \
 -with-tower -resume \
--c /home/jk843/nf_pipeline_scripts/conf/bakersrv1.config
+-c /home/software/nf_pipeline_scripts/conf/bakersrv1.config
 
 # Clean up on sucess/exit 0
 status=$?

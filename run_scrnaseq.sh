@@ -76,7 +76,7 @@ fi
 RAND=$(date +%s%N | cut -b10-19)
 OUT_DIR=${INPUT_DIR}/scrnase-1.1.0_${RAND}
 WORK_DIR=${OUT_DIR}/work
-NEXTFLOW_PIPELINE_DIR='/home/jk843/nf-pipelines/nf-core-scrnaseq-1.1.0'
+NEXTFLOW_PIPELINE_DIR='/home/software/nf-pipelines/nf-core-scrnaseq-1.1.0'
 
 echo "Pipeline is: "$NEXTFLOW_PIPELINE_DIR
 echo "Input is: "$INPUT_DIR
@@ -94,7 +94,7 @@ nextflow run ${NEXTFLOW_PIPELINE_DIR}/workflow/main.nf \
 -w ${WORK_DIR} \
 -profile singularity \
 -with-tower -resume \
--c /home/jk843/nf_pipeline_scripts/conf/bakersrv1.config
+-c /home/software/nf_pipeline_scripts/conf/bakersrv1.config
 
 # Clean up on sucess/exit 0
 status=$?
