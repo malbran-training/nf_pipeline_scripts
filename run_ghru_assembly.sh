@@ -1,22 +1,22 @@
 #!/bin/bash
 
-#export HTTP_PROXY='http://wwwcache.sanger.ac.uk:3128'
-#export HTTPS_PROXY='http://wwwcache.sanger.ac.uk:3128'
 export NXF_ANSI_LOG=false
-#export NXF_OPTS="-Xms8G -Xmx8G -Dnxf.pool.maxThreads=2000"
+export NXF_OPTS="-Xms8G -Xmx8G -Dnxf.pool.maxThreads=2000"
 export NXF_VER=21.10.6
 
 function help
 {
    # Display Help
-   echo "Runs the ghru assembly nextflow pipeline."
-   echo "Details of the pipeline found at https://gitlab.com/cgps/ghru/pipelines/dsl2/pipelines/assembly"
+   echo "########################################################################################################################"
+   echo "# Runs the ghru assembly nextflow pipeline.										#"
+   echo "# Details of the pipeline found at https://gitlab.com/cgps/ghru/pipelines/dsl2/pipelines/assembly			#"
    echo
-   echo "Usage: run_ghru_asembly.sh fastq_directory"
-   echo "Input:"
-   echo "fastq_directory     A directory containing the input fastq files"
+   echo "# Usage: run_ghru_asembly.sh fastq_directory										#"
+   echo "# Input:														#"
+   echo "# fastq_directory	A directory containing the input fastq files							#"
    echo
-   echo "To run this pipeline with alternative parameters, copy this script and make changes to nextflow run as required"
+   echo "# To run this pipeline with alternative parameters, copy this script and make changes to nextflow run as required	#"
+   echo "########################################################################################################################"
    echo
 }
 
@@ -27,7 +27,7 @@ NAG=$#
 if [ $NAG -ne 1 ]
 then
   help
-  echo "Please provide the correct number of input arguments"
+  echo "!!! Please provide the correct number of input arguments"
   echo
   exit;
 fi
@@ -39,14 +39,15 @@ DATA_DIR=$1
 if [ ! -d $DATA_DIR ]
 then
   help
-  echo "The directory $DATA_DIR does not exist"
+  echo "!!! The directory $DATA_DIR does not exist"
   echo
   exit;
 fi
 
 RAND=$(date +%s%N | cut -b10-19)
 OUT_DIR=${DATA_DIR}/ghru-assembly-2.1.2_${RAND}
-NEXTFLOW_PIPELINE_DIR='/home/vagrant/nf-pipelines/ghru-assembly-2.1.2'
+WORK_DIR=${OUT_DIR}/work
+NEXTFLOW_PIPELINE_DIR='/home/jk843/nf-pipelines/assembly-2.1.2'
 
 echo "Pipeline is: "$NEXTFLOW_PIPELINE_DIR
 echo "Input data is: "$DATA_DIR
@@ -62,13 +63,13 @@ ${NEXTFLOW_PIPELINE_DIR}/main.nf \
 --depth_cutoff 100 \
 --confindr_db_path /data/dbs/confindr/ \
 --careful \
--w ${OUT_DIR}/work \
+-w ${WORK_DIR} \
 -profile singularity \
 -with-tower -resume \
--c /home/vagrant/nf_pipeline_scripts/bakersrv1.config
+#-c /home/vagrant/nf_pipeline_scripts/bakersrv1.config
 
 # Clean up on sucess/exit 0
 status=$?
 if [[ $status -eq 0 ]]; then
-  rm -r ${OUT_DIR}/work
+  rm -r ${WORK_DIR}
 fi
