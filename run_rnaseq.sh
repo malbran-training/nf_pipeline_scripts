@@ -34,7 +34,7 @@ function help
 
 NAG=$#
 
-if [ $NAG -ne 3 ]
+if [ $NAG -ne 1 ] && [ $NAG -ne 6 ] && [ $NAG -ne 7 ]
 then
   help
   echo "!!! Please provide the correct number of input arguments"
@@ -42,12 +42,28 @@ then
   exit;
 fi
 
+# Get the options
+while getopts "hi:f:g:" option; do
+   case $option in
+      h) # display help
+         help
+         exit;;
+      i) # Input directory
+         INPUT_DIR=$OPTARG;;
+      f) # Reference fasta
+         FASTA=$OPTARG;;
+      g) # Reference GFF
+         GFF=$OPTARG;;
+     \?) # Invalid option
+         help
+         echo "!!!Error: Invalid arguments"
+         exit;;
+   esac
+done
+
 # Check the input directory exists
 
-INPUT_DIR=$1
 INPUT=${INPUT_DIR}"/samplesheet.csv"
-FASTA=$2
-GFF=$3
 
 if [ ! -d $INPUT_DIR ]
 then

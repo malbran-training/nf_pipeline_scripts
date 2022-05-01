@@ -28,7 +28,7 @@ function help
 
 NAG=$#
 
-if [ $NAG -ne 2 ]
+if [ $NAG -ne 1 ] && [ $NAG -ne 4 ] && [ $NAG -ne 5 ]
 then
   help
   echo "!!! Please provide the correct number of input arguments"
@@ -36,9 +36,25 @@ then
   exit;
 fi
 
-# Check the input directory exists
+# Get the options
+while getopts "hi:r:" option; do
+   case $option in
+      h) # display help
+         help
+         exit;;
+      s) # Species
+         SPECIES=$OPTARG;;
+      i) #  Input directory
+         INPUT_DIR=$OPTARG;;
+     \?) # Invalid option
+         help
+         echo "!!!Error: Invalid arguments"
+         exit;;
+   esac
+done
 
-INPUT_DIR=$2
+
+# Check the input directory exists
 
 if [ ! -d $INPUT_DIR ]
 then
@@ -57,7 +73,6 @@ echo "Pipeline is: "$NEXTFLOW_PIPELINE_DIR
 echo "Input data is: "$INPUT_DIR
 echo "Output will be written to: "$OUT_DIR
 
-SPECIES=$1
 ARIBA_POINTFINDER_SPECIES=""
 for TEST in campylobacter enterococcus_faecalis enterococcus_faecium escherichia_coli helicobacter_pylori klebsiella mycobacterium_tuberculosis neisseria_gonorrhoeae salmonella staphylococcus_aureus
 do

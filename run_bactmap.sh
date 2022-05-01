@@ -33,7 +33,7 @@ function help
 
 NAG=$#
 
-if [ $NAG -ne 2 ]
+if [ $NAG -ne 1 ] && [ $NAG -ne 4 ] && [ $NAG -ne 5 ]
 then
   help
   echo "!!! Please provide the correct number of input arguments"
@@ -41,11 +41,26 @@ then
   exit;
 fi
 
+# Get the options
+while getopts "hi:r:" option; do
+   case $option in
+      h) # display help
+         help
+         exit;;
+      i) # Input directory
+         INPUT_DIR=$OPTARG;;
+      r) #  Reference
+         REF=$OPTARG;;
+     \?) # Invalid option
+         help
+	 echo "!!!Error: Invalid arguments"
+         exit;;
+   esac
+done
+
 # Check the input directory and reference genome exists
 
-INPUT_DIR=$1
 INPUT=${INPUT_DIR}/"samplesheet.csv"
-REF=$2
 
 if [ ! -d $INPUT_DIR ]
 then

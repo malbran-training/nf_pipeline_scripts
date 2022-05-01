@@ -33,7 +33,7 @@ function help
 
 NAG=$#
 
-if [ $NAG -ne 2 ]
+if [ $NAG -ne 1 ] && [ $NAG -ne 4 ] && [ $NAG -ne 5 ]
 then
   help
   echo "!!! Please provide the correct number of input arguments"
@@ -41,10 +41,25 @@ then
   exit;
 fi
 
-# Check the input file exists
+# Get the options
+while getopts "hi:o:" option; do
+   case $option in
+      h) # display help
+         help
+         exit;;
+      i) # Input file
+         INPUT=$OPTARG;;
+      o) # Output directory
+         OUT_DIR=$OPTARG;;
+     \?) # Invalid option
+         help
+         echo "!!!Error: Invalid arguments"
+         exit;;
+   esac
+done
 
-INPUT=$1
-OUT_DIR=$2
+
+# Check the input file exists
 
 if [ ! -f $INPUT ]
 then
