@@ -25,9 +25,9 @@ function help
    echo "  -h		show this help message and exit"
    echo
    echo "required arguments:"
-   echo "  -s species		species"
-   echo "  -i input_directory	directory containing the FASTQ files to be assembled"
-   echo "  -i input_directory	directory containing the FASTQ files to be assembled"
+   echo "  -s species		      species"
+   echo "  -i input_directory	   directory containing the FASTQ files to analyse"
+   echo "  -o output_directory	directory to write the pipeline results to"
    echo   
    cat << EOM
 Supported MLST schemes are:
