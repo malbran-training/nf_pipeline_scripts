@@ -23,7 +23,7 @@ function help
    echo
    echo "optional arguments:"
    echo "  -h			show this help message and exit"
-   echo "  -g			wether to run gubbins or not, default is to not run gubbins
+   echo "  -g			remove recombination with gubbins, default is to not run gubbins
    echo
    echo "required arguments:"
    echo "  -i samplesheet.csv	a CSV file 'samplesheet.csv' that contains the paths to your FASTQ files - see https://nf-co.re/bactmap/1.0.0/usage"
@@ -45,15 +45,19 @@ then
 fi
 
 # Get the options
-while getopts "hi:r:" option; do
+while getopts "hgi:r:o:" option; do
    case $option in
       h) # display help
          help
          exit;;
-      i) # Input directory
-         INPUT_DIR=$OPTARG;;
+      g) # Remove recombination
+         GUBBINS="--remove_recombination"
+      i) # Input file
+         INPUT=$OPTARG;;
       r) #  Reference
          REF=$OPTARG;;
+      o) #  Reference
+         OUTPUT_DIR=$OPTARG;;
      \?) # Invalid option
          help
 	 echo "!!!Error: Invalid arguments"
@@ -107,10 +111,10 @@ nextflow run ${NEXTFLOW_PIPELINE_DIR}/workflow/main.nf \
 --reference ${REF} \
 --iqtree \
 -w ${WORK_DIR} \
-${gubbins} \
 -profile singularity \
 -with-tower -resume \
--c /home/software/nf_pipeline_scripts/conf/bakersrv1.config,/home/software/nf_pipeline_scripts/conf/pipelines/bactmap.config
+-c /home/software/nf_pipeline_scripts/conf/bioinfsrv1.config,/home/software/nf_pipeline_scripts/conf/pipelines/bactmap.config \
+${GUBBINS}
 
 # Clean up on success (exit 0)
 status=$?
