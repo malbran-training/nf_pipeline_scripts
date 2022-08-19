@@ -184,7 +184,7 @@ then
 fi
 
 # Get the options
-while getopts "hs:i:" option; do
+while getopts "hs:i:o:" option; do
    case $option in
       h) # display help
          help
