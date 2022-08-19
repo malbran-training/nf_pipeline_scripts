@@ -17,7 +17,7 @@ function help
    # Display Help
    script=$(basename $0)
    echo 
-   echo "usage: "$script" [-h] -i input_directory"
+   echo "usage: "$script" [-h] -i input_directory -o output_directory"
    echo
    echo "Runs the ghru roary nextflow pipeline, see https://gitlab.com/cgps/ghru/pipelines/roary"
    echo
