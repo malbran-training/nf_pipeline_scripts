@@ -26,7 +26,7 @@ function help
    echo
    echo "required arguments:"
    echo "  -i accessions		   TXT file listing accessions to download, file must end in .txt see https://nf-co.re/fetchngs/1.5/usage"
-   echo "  -o output_directory	location to store the downloaded data"
+   echo "  -o output_directory	directory to store the downloaded data"
    echo
    echo "To run this pipeline with alternative parameters, copy this script and make changes to nextflow run as required"
    echo
