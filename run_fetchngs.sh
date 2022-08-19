@@ -1,9 +1,12 @@
 #!/bin/bash
 #
 # Author: Jacqui Keane <drjkeane at gmail.com>
+# URL:    https://www.cambridgebioinformatics.com
 #
 # Usage: run_fetchngs.sh [-h] -i accessions.txt -o output_directory
 #
+
+set -eu
 
 export NXF_ANSI_LOG=false
 export NXF_OPTS="-Xms8G -Xmx8G -Dnxf.pool.maxThreads=2000"
@@ -19,10 +22,10 @@ function help
    echo "Runs the fetchngs nextflow pipeline, see https://nf-co.re/fetchngs/1.5"
    echo
    echo "optional arguments:"
-   echo "  -h, --help          	show this help message and exit"
+   echo "  -h              	   show this help message and exit"
    echo
    echo "required arguments:"
-   echo "  -i accessions		TXT file listing accessions to download, file must end in .txt see https://nf-co.re/fetchngs/1.5/usage"
+   echo "  -i accessions		   TXT file listing accessions to download, file must end in .txt see https://nf-co.re/fetchngs/1.5/usage"
    echo "  -o output_directory	location to store the downloaded data"
    echo
    echo "To run this pipeline with alternative parameters, copy this script and make changes to nextflow run as required"
@@ -30,9 +33,7 @@ function help
 }
 
 # Check number of input parameters 
-
 NAG=$#
-
 if [ $NAG -ne 1 ] && [ $NAG -ne 4 ] && [ $NAG -ne 5 ]
 then
   help
@@ -53,14 +54,12 @@ while getopts "hi:o:" option; do
          OUT_DIR=$OPTARG;;
      \?) # Invalid option
          help
-         echo "!!!Error: Invalid arguments"
+         echo "!!! Error: Invalid arguments"
          exit;;
    esac
 done
 
-
 # Check the input file exists
-
 if [ ! -f $INPUT ]
 then
   help
@@ -69,8 +68,11 @@ then
   exit;
 fi
 
+# Create a unique work directory
 RAND=$(date +%s%N | cut -b10-19)
 WORK_DIR=${OUT_DIR}/work_fetchngs-1.5_${RAND}
+
+# Set the location of the pipeline
 NEXTFLOW_PIPELINE_DIR='/home/software/nf-pipelines/nf-core-fetchngs-1.5'
 
 echo "Pipeline is: "$NEXTFLOW_PIPELINE_DIR
@@ -84,10 +86,12 @@ nextflow run ${NEXTFLOW_PIPELINE_DIR}/workflow/main.nf \
 -w ${WORK_DIR} \
 -profile singularity \
 -with-tower -resume \
--c /home/software/nf_pipeline_scripts/conf/bakersrv1.config
+-c /home/software/nf_pipeline_scripts/conf/bioinfsrv1.config
 
 # Clean up on sucess/exit 0
 status=$?
 if [[ $status -eq 0 ]]; then
   rm -r ${WORK_DIR}
 fi
+
+set +eu
