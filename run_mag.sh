@@ -45,7 +45,7 @@ then
 fi
 
 # Get the options
-while getopts "hi:" option; do
+while getopts "hi:o:" option; do
    case $option in
       h) # display help
          help
