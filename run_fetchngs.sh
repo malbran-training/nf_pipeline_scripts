@@ -51,7 +51,7 @@ while getopts "hi:o:" option; do
       i) # Input file
          INPUT=$OPTARG;;
       o) # Output directory
-         OUT_DIR=$OPTARG;;
+         OUTPUT_DIR=$OPTARG;;
      \?) # Invalid option
          help
          echo "!!! Error: Invalid arguments"
@@ -63,14 +63,24 @@ done
 if [ ! -f $INPUT ]
 then
   help
-  echo "!!! The file $INPUT does not exist"
+  echo "!!! The input file $INPUT does not exist"
   echo
   exit;
 fi
 
-# Create a unique work directory
+# Check the output directory exists
+if [ ! -f $OUTPUT_DIR ]
+then
+  help
+  echo "!!! The output directory $OUTPUT_DIR does not exist"
+  echo
+  exit;
+fi
+
+# Create a unique directory for the putput
 RAND=$(date +%s%N | cut -b10-19)
-WORK_DIR=${OUT_DIR}/work_fetchngs-1.5_${RAND}
+OUT_DIR=${OUTPUT_DIR}/fetchngs-1.5_${RAND}
+WORK_DIR=${OUT_DIR}/work
 
 # Set the location of the pipeline
 NEXTFLOW_PIPELINE_DIR='/home/software/nf-pipelines/nf-core-fetchngs-1.5'
@@ -80,6 +90,7 @@ echo "Input file is: "$INPUT
 echo "Output will be written to: "$OUT_DIR
 echo ""
 
+# Run the pipeline
 nextflow run ${NEXTFLOW_PIPELINE_DIR}/workflow/main.nf \
 --input ${INPUT} \
 --outdir ${OUT_DIR} \
@@ -88,7 +99,7 @@ nextflow run ${NEXTFLOW_PIPELINE_DIR}/workflow/main.nf \
 -with-tower -resume \
 -c /home/software/nf_pipeline_scripts/conf/bioinfsrv1.config
 
-# Clean up on sucess/exit 0
+# Clean up on success (exit 0)
 status=$?
 if [[ $status -eq 0 ]]; then
   rm -r ${WORK_DIR}
