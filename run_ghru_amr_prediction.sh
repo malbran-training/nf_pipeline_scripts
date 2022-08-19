@@ -1,4 +1,10 @@
 #!/bin/bash
+#
+# Author: Jacqui Keane <drjkeane at gmail.com>
+# URL:    https://www.cambridgebioinformatics.com
+#
+# Usage: run_ghru_amr_prediction.sh [-h] -s species -i input_directory -o output_directory
+#
 
 export NXF_ANSI_LOG=false
 export NXF_OPTS="-Xms8G -Xmx8G -Dnxf.pool.maxThreads=2000"
@@ -19,6 +25,9 @@ function help
    echo "required arguments:"
    echo "  -s species		species"
    echo "  -i input_directory   directory containing the FASTQ files"
+   echo "  -o output_directory   output directory to write the pipeline results to"
+   echo
+   echo "Valid species are: campylobacter enterococcus_faecalis enterococcus_faecium escherichia_coli helicobacter_pylori klebsiella mycobacterium_tuberculosis neisseria_gonorrhoeae salmonella staphylococcus_aureus"
    echo
    echo "To run this pipeline with alternative parameters, copy this script and make changes to nextflow run as required"
    echo
@@ -27,8 +36,7 @@ function help
 # Check number of input parameters 
 
 NAG=$#
-
-if [ $NAG -ne 1 ] && [ $NAG -ne 4 ] && [ $NAG -ne 5 ]
+if [ $NAG -ne 1 ] && [ $NAG -ne 6 ] && [ $NAG -ne 7 ]
 then
   help
   echo "!!! Please provide the correct number of input arguments"
@@ -44,44 +52,58 @@ while getopts "hs:i:" option; do
          exit;;
       s) # Species
          SPECIES=$OPTARG;;
-      i) #  Input directory
+      i) # Input directory
          INPUT_DIR=$OPTARG;;
+      o) # Output directory
+         OUTPUT_DIR=$OPTARG;;
      \?) # Invalid option
          help
-         echo "!!!Error: Invalid arguments"
+         echo "!!! Error: Invalid arguments"
          exit;;
    esac
 done
 
+# Check the species is valid
+ARIBA_POINTFINDER_SPECIES=""
+for TEST_SPECIES in campylobacter enterococcus_faecalis enterococcus_faecium escherichia_coli helicobacter_pylori klebsiella mycobacterium_tuberculosis neisseria_gonorrhoeae salmonella staphylococcus_aureus
+do
+    if [[ $SPECIES == $TEST_SPECIES* ]]
+    then
+        ARIBA_POINTFINDER_SPECIES=$TEST_SPECIES
+    fi
+done
 
 # Check the input directory exists
-
 if [ ! -d $INPUT_DIR ]
 then
   help
-  echo "!!! The directory $INPUT_DIR does not exist"
+  echo "!!! The input directory $INPUT_DIR does not exist"
   echo
   exit;
 fi
 
+# Check the output directory exists
+if [ ! -d $OUTPUT_DIR ]
+then
+  help
+  echo "!!! The output directory $OUTPUT_DIR does not exist"
+  echo
+  exit;
+fi
+
+# Create a unique directory for the output
 RAND=$(date +%s%N | cut -b10-19)
-OUT_DIR=${INPUT_DIR}/amr_prediction-1.1_${RAND}
+OUT_DIR=${OUTPUT_DIR}/amr_prediction-1.1_${RAND}
 WORK_DIR=${OUT_DIR}/work
+
+# Set the pipeline directory
 NEXTFLOW_PIPELINE_DIR='/home/software/nf-pipelines/amr_prediction-1.1'
 
 echo "Pipeline is: "$NEXTFLOW_PIPELINE_DIR
 echo "Input data is: "$INPUT_DIR
 echo "Output will be written to: "$OUT_DIR
 
-ARIBA_POINTFINDER_SPECIES=""
-for TEST in campylobacter enterococcus_faecalis enterococcus_faecium escherichia_coli helicobacter_pylori klebsiella mycobacterium_tuberculosis neisseria_gonorrhoeae salmonella staphylococcus_aureus
-do
-    if [[ $SPECIES == $TEST* ]]
-    then
-        ARIBA_POINTFINDER_SPECIES=$TEST
-    fi
-done
-
+#Run the pipeline
 if [[ $ARIBA_POINTFINDER_SPECIES != "" ]]
 then
     nextflow run \
@@ -108,8 +130,10 @@ else
     -c /home/software/nf_pipeline_scripts/conf/bakersrv1.config,/home/software/nf_pipeline_scripts/conf/pipelines/ghru_amr_prediction.config
  fi
 
-# Clean up on sucess/exit 0
+# Clean up on success (exit 0)
 status=$?
 if [[ $status -eq 0 ]]; then
   rm -r ${WORK_DIR}
 fi
+
+set +eu
