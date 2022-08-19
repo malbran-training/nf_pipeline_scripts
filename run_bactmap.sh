@@ -1,9 +1,12 @@
 #!/bin/bash
 #
 # Author: Jacqui Keane <drjkeane at gmail.com>
+# URL:    https://www.cambridgebioinformatics.com
 #
-# Usage: run_bactmap.sh [-h] -d input_directory -r reference.fasta
+# Usage: run_bactmap.sh [-h] [-g] -i input_samplesheet -r reference_file -o output_directory
 #
+
+set -eu 
 
 export NXF_ANSI_LOG=false
 export NXF_OPTS="-Xms8G -Xmx8G -Dnxf.pool.maxThreads=2000"
@@ -14,26 +17,26 @@ function help
    # Display Help
    script=$(basename $0)
    echo 
-   echo "usage: "$script" [-h] -i input_directory -r reference"
+   echo "usage: "$script" [-h] [-g] -i samplesheet.csv -r reference_file -o output_directory"
    echo
    echo "Runs the bactmap nextflow pipeline, see https://nf-co.re/bactmap/1.0.0"
    echo
    echo "optional arguments:"
-   echo "  -h, --help		show this help message and exit"
+   echo "  -h			show this help message and exit"
+   echo "  -g			wether to run gubbins or not, default is to not run gubbins
    echo
    echo "required arguments:"
-   echo "  -i input_directory	directory containing a CSV file 'samplesheet.csv' that contains the paths to your FASTQ files - see https://nf-co.re/bactmap/1.0.0/usage"
+   echo "  -i samplesheet.csv	a CSV file 'samplesheet.csv' that contains the paths to your FASTQ files - see https://nf-co.re/bactmap/1.0.0/usage"
    echo "  -r reference		reference fasta file"
+   echo "  -o output_directory  directory to store the output from the pipelines"
    echo
    echo "To run this pipeline with alternative parameters, copy this script and make changes to nextflow run as required"
    echo
 }
 
 # Check number of input parameters 
-
 NAG=$#
-
-if [ $NAG -ne 1 ] && [ $NAG -ne 4 ] && [ $NAG -ne 5 ]
+if [ $NAG -ne 1 ] && [ $NAG -ne 7 ] && [ $NAG -ne 8 ]
 then
   help
   echo "!!! Please provide the correct number of input arguments"
@@ -59,25 +62,15 @@ while getopts "hi:r:" option; do
 done
 
 # Check the input directory and reference genome exists
-
-INPUT=${INPUT_DIR}/"samplesheet.csv"
-
-if [ ! -d $INPUT_DIR ]
-then
-  help
-  echo "!!! The directory $INPUT_DIR does not exist"
-  echo
-  exit;
-fi
-
 if [ ! -f $INPUT ]
 then
   help
-  echo "!!! The file $INPUT does not exist"
+  echo "!!! The input file $INPUT does not exist"
   echo
   exit;
 fi
 
+# Check the refernce genome exists
 if [ ! -f $REF ]
 then
   help
@@ -86,27 +79,43 @@ then
   exit;
 fi
 
+# Check the output directory exists
+if [ ! -d $OUTPUT_DIR ]
+then
+  help
+  echo "!!! The output directory $OUTPUT_DIR does not exist"
+  echo
+  exit;
+fi
+
+# Create a unique directory for the outout
 RAND=$(date +%s%N | cut -b10-19)
-OUT_DIR=${INPUT_DIR}/bactmap-1.0.0_${RAND}
+OUT_DIR=${OUTPUT_DIR}/bactmap-1.0.0_${RAND}
 WORK_DIR=${OUT_DIR}/work
+
+# Set the pipeline directory
 NEXTFLOW_PIPELINE_DIR='/home/software/nf-pipelines/nf-core-bactmap-1.0.0'
 
 echo "Pipeline is: "$NEXTFLOW_PIPELINE_DIR
 echo "Input file is: "$INPUT
 echo "Output will be written to: "$OUT_DIR
 
+# Run the pipeline
 nextflow run ${NEXTFLOW_PIPELINE_DIR}/workflow/main.nf \
---input ${INPUT_DIR}/samplesheet.csv \
+--input ${INPUT} \
 --outdir ${OUT_DIR} \
 --reference ${REF} \
 --iqtree \
 -w ${WORK_DIR} \
+${gubbins} \
 -profile singularity \
 -with-tower -resume \
 -c /home/software/nf_pipeline_scripts/conf/bakersrv1.config,/home/software/nf_pipeline_scripts/conf/pipelines/bactmap.config
 
-# Clean up on sucess/exit 0
+# Clean up on success (exit 0)
 status=$?
 if [[ $status -eq 0 ]]; then
   rm -r ${WORK_DIR}
 fi
+
+set +eu
