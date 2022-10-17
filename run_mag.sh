@@ -22,7 +22,7 @@ function help
    echo "Runs the mag nextflow pipeline, see https://nf-co.re/mag/2.1.1"
    echo
    echo "optional arguments:"
-   echo "  -h, --help           show this help message and exit"
+   echo "  -h           show this help message and exit"
    echo
    echo "required arguments:"
    echo "  -i input_file	a CSV file that contains the paths to your FASTQ files - see https://nf-co.re/mag/2.1.1/usage"
