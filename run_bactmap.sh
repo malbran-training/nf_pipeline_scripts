@@ -56,7 +56,7 @@ while getopts "hgi:r:o:" option; do
          INPUT=$OPTARG;;
       r) # Reference
          REF=$OPTARG;;
-      o) # OUTPUT_DIRECTORY
+      o) # Output directory
          OUTPUT_DIR=$OPTARG;;
      \?) # Invalid option
          help
