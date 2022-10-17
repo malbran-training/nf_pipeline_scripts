@@ -22,7 +22,7 @@ function help
    echo "Runs the ghru roary nextflow pipeline, see https://gitlab.com/cgps/ghru/pipelines/roary"
    echo
    echo "optional arguments:"
-   echo "  -h, --help           show this help message and exit"
+   echo "  -h           show this help message and exit"
    echo
    echo "required arguments:"
    echo "  -i input_directory   directory containing the assembled genomes"
