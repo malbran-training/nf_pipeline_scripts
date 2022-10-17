@@ -50,7 +50,7 @@ while getopts "hi:o:" option; do
          exit;;
       i) # Input directory
          INPUT_DIR=$OPTARG;;
-      o) # Input directory
+      o) # Output directory
          OUTPUT_DIR=$OPTARG;;
      \?) # Invalid option
          help
