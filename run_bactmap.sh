@@ -36,7 +36,7 @@ function help
 
 # Check number of input parameters 
 NAG=$#
-if [ $NAG -ne 1 ] && [ $NAG -ne 7 ] && [ $NAG -ne 8 ]
+if [ $NAG -ne 1 ] && [ $NAG -ne 6 ] && [ $NAG -ne 7 ] && [ $NAG -ne 8 ]
 then
   help
   echo "!!! Please provide the correct number of input arguments"
@@ -54,9 +54,9 @@ while getopts "hgi:r:o:" option; do
          GUBBINS="--remove_recombination"
       i) # Input file
          INPUT=$OPTARG;;
-      r) #  Reference
+      r) # Reference
          REF=$OPTARG;;
-      o) #  Reference
+      o) # OUTPUT_DIRECTORY
          OUTPUT_DIR=$OPTARG;;
      \?) # Invalid option
          help
