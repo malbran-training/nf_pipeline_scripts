@@ -69,7 +69,7 @@ then
 fi
 
 # Check the output directory exists
-if [ ! -f $OUTPUT_DIR ]
+if [ ! -d $OUTPUT_DIR ]
 then
   help
   echo "!!! The output directory $OUTPUT_DIR does not exist"
