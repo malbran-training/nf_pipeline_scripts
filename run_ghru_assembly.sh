@@ -98,11 +98,11 @@ ${NEXTFLOW_PIPELINE_DIR}/main.nf \
 --fastq_pattern '*{R,_}{1,2}.f*q.gz' \
 --output_dir ${OUT_DIR} \
 --depth_cutoff 100 \
---confindr_db_path /data/dbs/confindr/ \
+--confindr_db_path /home/software/dbs/confindr/ \
 --careful \
 -w ${WORK_DIR} \
 -with-tower -resume \
--c /home/software/nf_pipeline_scripts/conf/bakersrv1.config,/home/software/nf_pipeline_scripts/conf/pipelines/ghru_assembly.config
+-c /home/software/nf_pipeline_scripts/conf/bioinfsrv1.config,/home/software/nf_pipeline_scripts/conf/pipelines/ghru_assembly.config
 
 # Clean up on success (exit 0)
 status=$?
