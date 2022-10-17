@@ -3,7 +3,7 @@
 # Author: Jacqui Keane <drjkeane at gmail.com>
 # URL:    https://www.cambridgebioinformatics.com
 #
-# Usage: run_ghru_mlst.sh -s species -i input_directory -o output_directory
+# Usage: run_ghru_mlst.sh [-h] -s species -i input_directory -o output_directory
 #
 
 set -eu
@@ -175,7 +175,7 @@ EOM
 
 # Check number of input parameters 
 NAG=$#
-if [ $NAG -ne 1 ] && [ $NAG -ne 5 ] && [ $NAG -ne 6 ]
+if [ $NAG -ne 1 ] && [ $NAG -ne 6 ] && [ $NAG -ne 7 ]
 then
   help
   echo "!!! Please provide the correct number of input arguments"
@@ -193,7 +193,7 @@ while getopts "hs:i:o:" option; do
          SPECIES=$OPTARG;;
       i) # Input directory
          INPUT_DIR=$OPTARG;;
-      o) # Input directory
+      o) # Output directory
          OUTPUT_DIR=$OPTARG;;
      \?) # Invalid option
          help
@@ -395,7 +395,7 @@ NEXTFLOW_PIPELINE_DIR='/home/software/nf-pipelines/mlst-1.2'
 
 echo "Pipeline is: "$NEXTFLOW_PIPELINE_DIR
 echo "Input data is: "$INPUT_DIR
-echo "Output will be written to: "$OUTPUT_DIR
+echo "Output will be written to: "$OUT_DIR
 
 # Run the nextflow pipeline
 nextflow run \
