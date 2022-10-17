@@ -17,7 +17,7 @@ function help
    # Display Help
    script=$(basename $0)
    echo 
-   echo "usage: "$script" [-h] -i input_directory"
+   echo "usage: "$script" [-h] -i input_file -o output_directory"
    echo
    echo "Runs the mag nextflow pipeline, see https://nf-co.re/mag/2.1.1"
    echo
