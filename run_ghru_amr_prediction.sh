@@ -20,14 +20,14 @@ function help
    echo "Runs the ghru amr prediction nextflow pipeline, see https://gitlab.com/cgps/ghru/pipelines/dsl2/pipelines/amr_prediction"
    echo
    echo "optional arguments:"
-   echo "  -h, --help           show this help message and exit"
+   echo "  -h           show this help message and exit"
    echo
    echo "required arguments:"
    echo "  -s species		species"
    echo "  -i input_directory   directory containing the FASTQ files"
    echo "  -o output_directory   output directory to write the pipeline results to"
    echo
-   echo "Valid species are: campylobacter enterococcus_faecalis enterococcus_faecium escherichia_coli helicobacter_pylori klebsiella mycobacterium_tuberculosis neisseria_gonorrhoeae salmonella staphylococcus_aureus"
+   echo "Valid species for ARIBA POINTFINDR databases are: campylobacter enterococcus_faecalis enterococcus_faecium escherichia_coli helicobacter_pylori klebsiella mycobacterium_tuberculosis neisseria_gonorrhoeae salmonella staphylococcus_aureus"
    echo
    echo "To run this pipeline with alternative parameters, copy this script and make changes to nextflow run as required"
    echo
@@ -127,7 +127,7 @@ else
     --read_polishing_depth_cutoff 100 \
     -w ${WORK_DIR} \
     -with-tower -resume \
-    -c /home/software/nf_pipeline_scripts/conf/bakersrv1.config,/home/software/nf_pipeline_scripts/conf/pipelines/ghru_amr_prediction.config
+    -c /home/software/nf_pipeline_scripts/conf/bioinfsrv1.config,/home/software/nf_pipeline_scripts/conf/pipelines/ghru_amr_prediction.config
  fi
 
 # Clean up on success (exit 0)
