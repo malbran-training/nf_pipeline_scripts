@@ -23,7 +23,7 @@ function help
    echo
    echo "optional arguments:"
    echo "  -h			show this help message and exit"
-   echo "  -g			remove recombination with gubbins, default is to not run gubbins
+   echo "  -g			remove recombination with gubbins, default is to not run gubbins"
    echo
    echo "required arguments:"
    echo "  -i samplesheet.csv	a CSV file 'samplesheet.csv' that contains the paths to your FASTQ files - see https://nf-co.re/bactmap/1.0.0/usage"
@@ -51,7 +51,7 @@ while getopts "hgi:r:o:" option; do
          help
          exit;;
       g) # Remove recombination
-         GUBBINS="--remove_recombination"
+         GUBBINS="--remove_recombination";;
       i) # Input file
          INPUT=$OPTARG;;
       r) # Reference
