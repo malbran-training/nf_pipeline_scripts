@@ -116,7 +116,7 @@ then
     --species ${ARIBA_POINTFINDER_SPECIES} \
     -w ${WORK_DIR} \
     -with-tower -resume \
-    -c /home/software/nf_pipeline_scripts/conf/bakersrv1.config,/home/software/nf_pipeline_scripts/conf/pipelines/ghru_amr_prediction.config
+    -c /home/software/nf_pipeline_scripts/conf/bioinfsrv1.config,/home/software/nf_pipeline_scripts/conf/pipelines/ghru_amr_prediction.config
 else
     nextflow run \
     ${NEXTFLOW_PIPELINE_DIR}/main.nf \
