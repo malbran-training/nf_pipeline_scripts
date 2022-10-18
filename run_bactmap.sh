@@ -34,6 +34,9 @@ function help
    echo
 }
 
+# Assume do not remove recombination
+GUBBINS=""
+
 # Check number of input parameters 
 NAG=$#
 if [ $NAG -ne 1 ] && [ $NAG -ne 6 ] && [ $NAG -ne 7 ] && [ $NAG -ne 8 ]
