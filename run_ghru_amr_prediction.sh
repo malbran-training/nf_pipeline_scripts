@@ -21,9 +21,9 @@ function help
    echo
    echo "optional arguments:"
    echo "  -h           show this help message and exit"
+   echo "  -s species           species"
    echo
    echo "required arguments:"
-   echo "  -s species		species"
    echo "  -i input_directory   directory containing the FASTQ files"
    echo "  -o output_directory   output directory to write the pipeline results to"
    echo
@@ -36,7 +36,7 @@ function help
 # Check number of input parameters 
 
 NAG=$#
-if [ $NAG -ne 1 ] && [ $NAG -ne 6 ] && [ $NAG -ne 7 ]
+if [ $NAG -ne 1 ] && [ $NAG -ne 4 ] && [ $NAG -ne 5 ] && [ $NAG -ne 6 ] && [ $NAG -ne 7 ]
 then
   help
   echo "!!! Please provide the correct number of input arguments"
