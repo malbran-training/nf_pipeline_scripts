@@ -81,7 +81,7 @@ fi
 
 # Create a unique directory to store the output
 RAND=$(date +%s%N | cut -b10-19)
-OUT_DIR=${OUPUT_DIR}/mag-2.1.1_${RAND}
+OUT_DIR=${OUTPUT_DIR}/mag-2.1.1_${RAND}
 WORK_DIR=${OUT_DIR}/work
 
 # Set the nextflow pipeline directory
