@@ -91,7 +91,7 @@ echo "Output will be written to: "$OUT_DIR
 
 # Run the pipeline
 nextflow run \
-${NEXFLOW_WORKFLOWS_DIR}/roary/roary.nf \
+${NEXTFLOW_PIPELINE_DIR}/roary.nf \
 --input_dir ${INPUT_DIR} \
 --fasta_pattern '*.fasta' \
 --output_dir ${OUT_DIR} \
