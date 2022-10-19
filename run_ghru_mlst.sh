@@ -11,6 +11,7 @@ set -eu
 export NXF_ANSI_LOG=false
 export NXF_OPTS="-Xms8G -Xmx8G -Dnxf.pool.maxThreads=2000"
 export NXF_VER=21.10.6
+export NXF_SINGULARITY_CACHEDIR=/home/software/singularity
 
 function help
 {
