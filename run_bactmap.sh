@@ -124,20 +124,21 @@ ${GUBBINS}
 # Clean up on success (exit 0)
 status=$?
 if [[ $status -eq 0 ]]; then
-  rm -r ${WORK_DIR}
-  # Generate coverage stats
-  OUT_DIR_PATH=$(realpath $OUT_DIR)
-  REF_PATH=$(realpath $REF)
-  cd ${OUT_DIR_PATH}/samtools
-  FILES="./*.bam"
-  conda activate samtools-1.15
-  for f in $FILES
-   do
-     samtools coverage --reference $REF_PATH $f > $f.coverage
-  done
-  awk '{print FILENAME"\t"$0}' *.coverage > all.tsv
-  less all.tsv | sort  > ../multiqc/coverage_summary.tsv
-  conda deactivate
+   rm -r ${WORK_DIR}
+   # Generate coverage stats
+   OUT_DIR_PATH=$(realpath $OUT_DIR)
+   REF_PATH=$(realpath $REF)
+   cd ${OUT_DIR_PATH}/samtools
+   FILES="./*.bam"
+   conda activate samtools-1.15
+   for f in $FILES
+    do
+      samtools coverage --reference $REF_PATH $f > $f.coverage
+   done
+   awk '{print FILENAME"\t"$0}' *.coverage > all.tsv
+   less all.tsv | sort | uniq > coverage_summary.tsv
+   mv coverage_summary.tsv ../multiqc
+   conda deactivate
 fi
 
 set +eu

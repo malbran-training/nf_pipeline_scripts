@@ -11,7 +11,6 @@ set -eu
 export NXF_ANSI_LOG=false
 export NXF_OPTS="-Xms8G -Xmx8G -Dnxf.pool.maxThreads=2000"
 export NXF_VER=21.10.6
-export NXF_SINGULARITY_CACHEDIR=/home/software/singularity
 
 function help
 {
@@ -179,6 +178,9 @@ yersinia_ruckeri
 EOM
 }
 
+# Set the specis to empty
+SPECIES=""
+
 # Check number of input parameters
 NAG=$#
 if [ $NAG -ne 1 ] && [ $NAG -ne 2 ] && [ $NAG -ne 6 ] && [ $NAG -ne 7 ] && [ $NAG -ne 8 ]
@@ -267,6 +269,7 @@ NEXTFLOW_PIPELINE_DIR='/home/software/nf-pipelines/mlst-1.2'
 echo "Pipeline is: "$NEXTFLOW_PIPELINE_DIR
 echo "Input data is: "$INPUT_DIR
 echo "Output will be written to: "$OUT_DIR
+echo "Species is: "$SPECIES
 
 # Run the nextflow pipeline
 nextflow run \
