@@ -12,6 +12,8 @@ export NXF_ANSI_LOG=false
 export NXF_OPTS="-Xms8G -Xmx8G -Dnxf.pool.maxThreads=2000"
 export NXF_VER=21.10.6
 
+source $MINICONDA/etc/profile.d/conda.sh
+
 function help
 {
    # Display Help
@@ -123,6 +125,19 @@ ${GUBBINS}
 status=$?
 if [[ $status -eq 0 ]]; then
   rm -r ${WORK_DIR}
+  # Generate coverage stats
+  OUT_DIR_PATH=$(realpath $OUT_DIR)
+  REF_PATH=$(realpath $REF)
+  cd ${OUT_DIR_PATH}/samtools
+  FILES="./*.bam"
+  conda activate samtools-1.15
+  for f in $FILES
+   do
+     samtools coverage --reference $REF_PATH $f > $f.coverage
+  done
+  awk '{print FILENAME"\t"$0}' *.coverage > all.tsv
+  less all.tsv | sort  > ../multiqc/coverage_summary.tsv
+  conda deactivate
 fi
 
 set +eu
