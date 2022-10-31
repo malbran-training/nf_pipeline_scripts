@@ -9,7 +9,7 @@
 set -eu 
 
 export NXF_ANSI_LOG=false
-export NXF_OPTS="-Xms8G -Xmx8G -Dnxf.pool.maxThreads=2000"
+export NXF_OPTS="-Xms4G -Xmx4G -Dnxf.pool.maxThreads=500"
 export NXF_VER=21.10.6
 
 source $MINICONDA/etc/profile.d/conda.sh
@@ -118,7 +118,7 @@ nextflow run ${NEXTFLOW_PIPELINE_DIR}/workflow/main.nf \
 -w ${WORK_DIR} \
 -profile singularity \
 -with-tower -resume \
--c /home/software/nf_pipeline_scripts/conf/bioinfsrv1.config,/home/software/nf_pipeline_scripts/conf/pipelines/bactmap.config \
+-c /home/manager/nf_pipeline_scripts/conf/bioinfsrv1.config,/home/manager/nf_pipeline_scripts/conf/pipelines/bactmap.config \
 ${GUBBINS}
 
 # Clean up on success (exit 0)
