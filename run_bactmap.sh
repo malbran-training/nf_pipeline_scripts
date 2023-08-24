@@ -10,7 +10,7 @@ set -eu
 
 export NXF_ANSI_LOG=false
 export NXF_OPTS="-Xms4G -Xmx4G -Dnxf.pool.maxThreads=500"
-export NXF_VER=21.10.6
+export NXF_VER=23.04.1
 
 source $MINICONDA/etc/profile.d/conda.sh
 
@@ -103,7 +103,7 @@ OUT_DIR=${OUTPUT_DIR}/bactmap-1.0.0_${RAND}
 WORK_DIR=${OUT_DIR}/work
 
 # Set the pipeline directory
-NEXTFLOW_PIPELINE_DIR='/home/software/nf-pipelines/nf-core-bactmap-1.0.0'
+NEXTFLOW_PIPELINE_DIR='/home/manager/nf-pipelines/nf-core-bactmap-1.0.0'
 
 echo "Pipeline is: "$NEXTFLOW_PIPELINE_DIR
 echo "Input file is: "$INPUT
@@ -125,20 +125,6 @@ ${GUBBINS}
 status=$?
 if [[ $status -eq 0 ]]; then
    rm -r ${WORK_DIR}
-   # Generate coverage stats
-   OUT_DIR_PATH=$(realpath $OUT_DIR)
-   REF_PATH=$(realpath $REF)
-   cd ${OUT_DIR_PATH}/samtools
-   FILES="./*.bam"
-   conda activate samtools-1.15
-   for f in $FILES
-    do
-      samtools coverage --reference $REF_PATH $f > $f.coverage
-   done
-   awk '{print FILENAME"\t"$0}' *.coverage > all.tsv
-   less all.tsv | sort | uniq > coverage_summary.tsv
-   mv coverage_summary.tsv ../multiqc
-   conda deactivate
 fi
 
 set +eu
