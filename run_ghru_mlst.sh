@@ -10,7 +10,7 @@ set -eu
 
 export NXF_ANSI_LOG=false
 export NXF_OPTS="-Xms8G -Xmx8G -Dnxf.pool.maxThreads=2000"
-export NXF_VER=21.10.6
+export NXF_VER=23.04.1
 
 function help
 {
@@ -264,7 +264,7 @@ OUT_DIR=${OUTPUT_DIR}/ghru-mlst-1.4_${RAND}
 WORK_DIR=${OUT_DIR}/work
 
 # Set the location of the nextflow pipeline
-NEXTFLOW_PIPELINE_DIR='/home/software/nf-pipelines/mlst-1.2'
+NEXTFLOW_PIPELINE_DIR='/home/manager/nf-pipelines/mlst-1.2'
 
 echo "Pipeline is: "$NEXTFLOW_PIPELINE_DIR
 echo "Input data is: "$INPUT_DIR
@@ -281,7 +281,7 @@ ${NEXTFLOW_PIPELINE_DIR}/main.nf \
 --mlst_species "${MLST_SPECIES}" \
 -w ${WORK_DIR} \
 -with-tower -resume \
--c /home/software/nf_pipeline_scripts/conf/bioinfsrv1.config,/home/software/nf_pipeline_scripts/conf/pipelines/ghru_mlst.config
+-c /home/manager/nf_pipeline_scripts/conf/bioinfsrv1.config,/home/manager/nf_pipeline_scripts/conf/pipelines/ghru_mlst.config
 
 # Clean up on success (exit 0)
 status=$?
