@@ -8,7 +8,7 @@
 
 export NXF_ANSI_LOG=false
 export NXF_OPTS="-Xms8G -Xmx8G -Dnxf.pool.maxThreads=2000"
-export NXF_VER=21.10.6
+export NXF_VER=23.04.1
 
 function help
 {
@@ -97,7 +97,7 @@ OUT_DIR=${OUTPUT_DIR}/amr_prediction-1.1_${RAND}
 WORK_DIR=${OUT_DIR}/work
 
 # Set the pipeline directory
-NEXTFLOW_PIPELINE_DIR='/home/software/nf-pipelines/amr_prediction-1.1'
+NEXTFLOW_PIPELINE_DIR='/home/manager/nf-pipelines/amr_prediction-1.1'
 
 echo "Pipeline is: "$NEXTFLOW_PIPELINE_DIR
 echo "Input data is: "$INPUT_DIR
@@ -116,7 +116,7 @@ then
     --species ${ARIBA_POINTFINDER_SPECIES} \
     -w ${WORK_DIR} \
     -with-tower -resume \
-    -c /home/software/nf_pipeline_scripts/conf/bioinfsrv1.config,/home/software/nf_pipeline_scripts/conf/pipelines/ghru_amr_prediction.config
+    -c /home/manager/nf_pipeline_scripts/conf/bioinfsrv1.config,/home/manager/nf_pipeline_scripts/conf/pipelines/ghru_amr_prediction.config
 else
     nextflow run \
     ${NEXTFLOW_PIPELINE_DIR}/main.nf \
@@ -127,7 +127,7 @@ else
     --read_polishing_depth_cutoff 100 \
     -w ${WORK_DIR} \
     -with-tower -resume \
-    -c /home/software/nf_pipeline_scripts/conf/bioinfsrv1.config,/home/software/nf_pipeline_scripts/conf/pipelines/ghru_amr_prediction.config
+    -c /home/manager/nf_pipeline_scripts/conf/bioinfsrv1.config,/home/manager/nf_pipeline_scripts/conf/pipelines/ghru_amr_prediction.config
  fi
 
 # Clean up on success (exit 0)
