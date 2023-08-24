@@ -10,7 +10,7 @@ set -eu
 
 export NXF_ANSI_LOG=false
 export NXF_OPTS="-Xms8G -Xmx8G -Dnxf.pool.maxThreads=2000"
-export NXF_VER=21.10.6
+export NXF_VER=23.04.1
 
 function help
 {
@@ -19,13 +19,13 @@ function help
    echo 
    echo "usage: "$script" [-h] -i accessions.txt -o output_directory"
    echo
-   echo "Runs the fetchngs nextflow pipeline, see https://nf-co.re/fetchngs/1.5"
+   echo "Runs the fetchngs nextflow pipeline, see https://nf-co.re/fetchngs/1.10.0"
    echo
    echo "optional arguments:"
    echo "  -h              	   show this help message and exit"
    echo
    echo "required arguments:"
-   echo "  -i accessions		   TXT file listing accessions to download, file must end in .txt see https://nf-co.re/fetchngs/1.5/usage"
+   echo "  -i accessions		   TXT file listing accessions to download, file must end in .txt see https://nf-co.re/fetchngs/1.10.0/usage"
    echo "  -o output_directory	directory to store the downloaded data"
    echo
    echo "To run this pipeline with alternative parameters, copy this script and make changes to nextflow run as required"
@@ -77,13 +77,13 @@ then
   exit;
 fi
 
-# Create a unique directory for the putput
+# Create a unique directory for the output
 RAND=$(date +%s%N | cut -b10-19)
-OUT_DIR=${OUTPUT_DIR}/fetchngs-1.5_${RAND}
+OUT_DIR=${OUTPUT_DIR}/fetchngs-1.10.0_${RAND}
 WORK_DIR=${OUT_DIR}/work
 
 # Set the location of the pipeline
-NEXTFLOW_PIPELINE_DIR='/home/software/nf-pipelines/nf-core-fetchngs-1.5'
+NEXTFLOW_PIPELINE_DIR='/home/manager/nf-pipelines/nf-core-fetchngs-1.10.0'
 
 echo "Pipeline is: "$NEXTFLOW_PIPELINE_DIR
 echo "Input file is: "$INPUT
@@ -97,7 +97,7 @@ nextflow run ${NEXTFLOW_PIPELINE_DIR}/workflow/main.nf \
 -w ${WORK_DIR} \
 -profile singularity \
 -with-tower -resume \
--c /home/software/nf_pipeline_scripts/conf/bioinfsrv1.config
+-c /home/manager/nf_pipeline_scripts/conf/bioinfsrv1.config
 
 # Clean up on success (exit 0)
 status=$?
