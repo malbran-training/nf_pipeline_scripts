@@ -10,7 +10,7 @@ set -eu
 
 export NXF_ANSI_LOG=false
 export NXF_OPTS="-Xms8G -Xmx8G -Dnxf.pool.maxThreads=2000"
-export NXF_VER=21.10.6
+export NXF_VER=23.04.1
 
 function help
 {
@@ -83,7 +83,7 @@ OUT_DIR=${OUTPUT_DIR}/ghru-assembly-2.1.2_${RAND}
 WORK_DIR=${OUT_DIR}/work
 
 # Set the pipeline directory
-NEXTFLOW_PIPELINE_DIR='/home/software/nf-pipelines/assembly-2.1.2'
+NEXTFLOW_PIPELINE_DIR='/home/manager/nf-pipelines/assembly-2.1.2'
 
 echo "Pipeline is: "$NEXTFLOW_PIPELINE_DIR
 echo "Input data is: "$INPUT_DIR
@@ -98,11 +98,11 @@ ${NEXTFLOW_PIPELINE_DIR}/main.nf \
 --fastq_pattern '*{R,_}{1,2}.f*q.gz' \
 --output_dir ${OUT_DIR} \
 --depth_cutoff 100 \
---confindr_db_path /home/software/dbs/confindr/ \
+--confindr_db_path /home/manager/dbs/confindr/ \
 --careful \
 -w ${WORK_DIR} \
 -with-tower -resume \
--c /home/software/nf_pipeline_scripts/conf/bioinfsrv1.config,/home/software/nf_pipeline_scripts/conf/pipelines/ghru_assembly.config
+-c /home/manager/nf_pipeline_scripts/conf/bioinfsrv1.config,/home/manager/nf_pipeline_scripts/conf/pipelines/ghru_assembly.config
 
 # Clean up on success (exit 0)
 status=$?
